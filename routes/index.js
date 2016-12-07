@@ -142,7 +142,7 @@ router.post('/signin', passport.authenticate('local', {
 
 // passport facebook 첫번째로 실행 1
 router.get('/signin/facebook',
-  passport.authenticate('facebook', { scope: 'email' })
+  passport.authenticate('facebook', { scope: ['email'] })
 );
 
 // passport facebook callbackURL로 인증 실행 3
