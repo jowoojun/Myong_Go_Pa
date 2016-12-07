@@ -1,0 +1,40 @@
+include ../profile_layout
+.container
+      h1.page-header 내가 등록한 식당
+      
+      table.table.table-striped.table-bordered
+        thead
+          tr
+            th 숙소이름
+            th 우편번호
+            th 분류
+            th 상세설명
+            th 
+        tbody
+          each rest in rests
+            tr
+              td 
+                a(href='/rests/#{rest._id}')= rest.title
+              td= rest.post_number
+              td= rest.category
+              td= rest.description
+              td 
+                a.btn.btn-xs.btn-default(href='/rests/#{rest._id}') 메뉴추가
+                
+                a.btn.btn-xs.btn-default(data-id=rest.id, class='delete') 삭제
+              
+
+                              
+                
+
+    form#deleteForm(style='display:none', method="POST")
+            
+    script(type='text/javascript').
+      $(".delete").click(function(e) {
+        var id = $(e.currentTarget).data('id');
+        if (confirm('정말 삭제하시겠습니까?')) {
+          console.log("success");
+          $("#deleteForm").attr('action', "/users/" + id + "/rest?_method=DELETE").submit();          
+        }
+        return false;
+      });

@@ -1,0 +1,11 @@
+include ../profile_layout
+.container
+    h1.page-header Host되기
+
+    h3 Host가 되시겠습니까?
+    p 집 수리비를 모으고 꿈에 그리던 여행을 떠나는 등 호스팅 부수입으로 꿈을 이루세요.
+
+    p
+        form(action='/users/#{user._id}', method='POST')
+            div.form-actions
+                button.btn.btn-primary(type='submit') 호스트등록하기

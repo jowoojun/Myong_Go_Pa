@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  .container
+    .row
+      .col-lg-12
+        h1.page-header 검색어
+    
+    each rest in rests
+      .row(style="margin-bottom:20px")
+        .col-md-7
+          if rest.filePath 
+              a(href='/rests/#{rest.id}')
+                  img.img-responsive(src=rest.filePath alt="사진" style="width:700px; height:300px")
+          else
+              a(href='/rests/#{rest.id}')
+                  img.img-responsive(src='http://placehold.it/700x300', alt='사진')
+        |             
+        .col-md-5
+          h3=rest.title
+          |                 
+          h4=rest.category
+          |                 
+          p=rest.description
+          |                 
+          a.btn.btn-primary(href='/rests/#{rest.id}') 상세보기
+            span.glyphicon.glyphicon-chevron-right
+    

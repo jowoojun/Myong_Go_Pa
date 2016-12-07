@@ -1,0 +1,32 @@
+include ../profile_layout
+.container
+    h1.page-header Favorite
+
+    table.table.table-striped.table-bordered
+        thead
+          tr
+            th 식당 이름
+            th 
+        tbody
+          each favorite in favorites
+            tr
+              td
+                a(href="/rooms/#{favorite.room_id}")=favorite.title
+              td
+                a.btn.btn-xs.btn-default(data-id=favorite.id, class='delete') 삭제
+                
+                
+                
+                
+
+    form#deleteForm(style='display:none', method="POST")
+            
+    script(type='text/javascript').
+      $(".delete").click(function(e) {
+        var id = $(e.currentTarget).data('id');
+        if (confirm('정말 삭제하시겠습니까?')) {
+          console.log("success");
+          $("#deleteForm").attr('action', "/users/" + id + "/favorite?_method=DELETE").submit();          
+        }
+        return false;
+      });

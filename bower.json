@@ -1,0 +1,26 @@
+{
+  "name": "AirBNB",
+  "description": "",
+  "main": "",
+  "authors": [
+    "jowoojun <jowoojun@naver.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jowoojun/BNBair_project",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0",
+    "bourbon": "^4.2.7",
+    "moment": ">=2.10.5",
+    "jquery": "^3.1.1",
+    "lodash": "^4.17.2"
+  }
+}

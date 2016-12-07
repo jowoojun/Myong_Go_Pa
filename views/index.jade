@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  header#myCarousel.carousel.slide
+      ol.carousel-indicators
+          li.active(data-target='#myCarousel', data-slide-to='0')
+          |             
+          li(data-target='#myCarousel', data-slide-to='1')
+          |             
+          li(data-target='#myCarousel', data-slide-to='2')
+
+     
+      .carousel-inner
+        .item.active
+     
+            .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide One');")
+            |                 
+            .carousel-caption
+                h2 Caption 1         
+        .item
+     
+            .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');")
+            |                 
+            .carousel-caption
+                h2 Caption 2
+        |             
+        .item
+     
+            .fill(style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');")
+            |                 
+            .carousel-caption
+                h2 Caption 3
+     
+      a.left.carousel-control(href='#myCarousel', data-slide='prev')
+          span.icon-prev
+      |         
+      a.right.carousel-control(href='#myCarousel', data-slide='next')
+          span.icon-next
+
+    .container
+        hr
+        each rest in rests    
+            .row(style="margin-bottom:20px;")
+                .col-md-7
+                    if rest.filePath 
+                        a(href='/rests/#{rest.id}')
+                            img.img-responsive(src=rest.filePath alt="사진" style="width:700px; height:300px")
+                    else
+                        a(href='/rests/#{rest.id}')
+                            img.img-responsive(src='http://placehold.it/700x300', alt='사진')
+                    |             
+                .col-md-5
+                    h3=rest.title
+                    |                 
+                    h4=rest.category
+                    |                 
+                    p=rest.description
+                    |                 
+                    a.btn.btn-primary(href='/rests/#{rest.id}') 상세보기
+                        span.glyphicon.glyphicon-chevron-right
+                hr
+    script.
+      $('.carousel').carousel({
+          interval: 1000 //changes the speed
+      })
+
+

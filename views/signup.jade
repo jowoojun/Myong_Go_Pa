@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .container
+    h1.page-header 회원가입
+    form(action='/signup', method='POST')
+        .form-group
+            label(for='name') 이름
+            input.form-control(type='text', id='name', name="name", placeholder='Name')
+        .form-group
+            label(for='email') 이메일
+            input.form-control(type='email', id='email' name="email", placeholder='Email')
+        .form-group
+            label(for='password') 비밀번호
+            input.form-control(type='password', id='password' name="password", placeholder='Password')     
+        .form-group
+            label(for='password_confirmation') 비밀번호           
+            input.form-control(type='password', id='password_confirmation' name="password_confirmation", placeholder='password')
+        
+        button.btn.btn-default(type='submit') 가입  
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        hr 
+    

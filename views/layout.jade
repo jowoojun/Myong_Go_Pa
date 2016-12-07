@@ -1,0 +1,30 @@
+doctype html
+html(lang='ko')
+  head
+    block title
+      title Myong_go_pa
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')    
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap-theme.css')
+    link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/half-slider.css')
+    script(type="text/javascript", src="//apis.daum.net/maps/maps3.js?apikey=9e7ae8dffca3092cc74da6a36333f7fe&libraries=services")
+    script(type='text/javascript', src='/bower_components/jquery/dist/jquery.js')
+    script(type='text/javascript', src='/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(type='text/javascript', src='/bower_components/lodash/lodash.min.js')
+    
+  body
+    block top-nav
+      include ./includes/topnav
+    block flash
+    if flashMessages
+      each texts, type in flashMessages
+        .container
+          .alert(class='alert-#{type}')
+            each msg in texts
+              p= msg           
+    block content
+
+    

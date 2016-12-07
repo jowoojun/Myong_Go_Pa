@@ -1,0 +1,28 @@
+extends layout
+
+block content 
+  .container
+        ul.class.nav.nav-tabs.nav-justified
+            if user.ifHost
+                li 
+                    a(href='/users/#{user._id}') 프로필
+                li 
+                    a(href='/users/#{user._id}/favorite') Favorite
+                li 
+                    a(href='/users/#{user._id}/register') 식당등록
+                li 
+                    a(href='/users/#{user._id}/rests') 식당정보
+            
+            else if user.ifRoot
+                li 
+                    a(href='/users/#{user._id}') 프로필
+                li 
+                    a(href='/users') 사용자목록     
+            
+            else
+                li 
+                    a(href='/users/#{user._id}') 프로필
+                li 
+                    a(href='/users/#{user._id}/favorite') Favorite
+                li 
+                    a(href='/users/#{user._id}/host') Host되기

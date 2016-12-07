@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .container
+    form.form-signin(action='/signin', method='POST')
+      a.btn.btn-lg.btn-block.btn-default(href="/signin/facebook") facebook으로 로그인
+      hr
+      label(for='email', class='sr-only') Email address
+      input(type='email', id='email', name='email', class='form-control', placeholder='Email address', required, autofocus)
+      label(for='password', class='sr-only') Password
+      input(type='password', id='password', name='password', class='form-control', placeholder='Password', required, autofocus)
+      button.btn.btn-lg.btn-primary.btn-block(type='submit') 로그인
+      hr
+      a.btn.btn-default.btn-mini(href='/signup') 회원가입
+    
