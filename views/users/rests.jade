@@ -19,8 +19,10 @@ include ../profile_layout
               td= rest.category
               td= rest.description
               td 
-                a.btn.btn-xs.btn-default(href='/rests/#{rest._id}') 메뉴추가
+                a.btn.btn-xs.btn-default(href='/users/#{rest._id}/menus') 메뉴추가
                 
+                a.btn.btn-xs.btn-default(href='/users/#{rest._id}/menus/show') 메뉴확인
+
                 a.btn.btn-xs.btn-default(data-id=rest.id, class='delete') 삭제
               
 

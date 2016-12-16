@@ -4,6 +4,7 @@ var express = require('express'),
     Cafe = require('../models/Cafe');
     Post = require('../models/Post');
     Favorite = require('../models/Favorite');
+    
 var router = express.Router();
 
 function needAuth(req, res, next) {

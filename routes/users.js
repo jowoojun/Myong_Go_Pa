@@ -3,7 +3,9 @@ var express = require('express'),
     Rest = require('../models/Rest');
     Cafe = require('../models/Cafe');
     Favorite = require('../models/Favorite');
+    Menu = require('../models/Menu');
 var pbkdf2Password = require('pbkdf2-password');
+
 var router = express.Router();
 var hasher = pbkdf2Password();
 var multer = require('multer');
@@ -42,6 +44,22 @@ function edit_validateForm(form, options) {
 
   if (form.change_password.length < 6) {
     return '비밀번호는 6글자 이상이어야 합니다.';
+  }
+
+  return null;
+}
+
+function menu_validateForm(form, options) {
+  var menu = form.menu || "";
+  var price = form.price || "";
+  menu = menu.trim();
+
+  if (!menu) {
+    return '메뉴이름을 입력해주세요.';
+  }
+
+  if (!price) {
+    return '가격을 입력해주세요.';
   }
 
   return null;
@@ -153,7 +171,87 @@ router.get('/:id/rests', needAuth, function(req, res, next) {
   });
 });
 
+// 메뉴추가화면
+router.get('/:id/menus', needAuth, function(req,res,next){
+  User.findById(req.user.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+
+    Rest.findById(req.params.id, function(err, rest){
+      if(err){
+        return next(err);
+      }
+      
+      res.render('users/menu/add', {user: user, rest:rest});
+    });
+  });
+});
+
+// 메뉴확인화면
+router.get('/:id/menus/show', needAuth, function(req,res,next){
+  User.findById(req.user.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+
+    Rest.findById(req.params.id, function(err, rest){
+      Menu.find({rest_id:req.params.id}, function(err, menus){
+        if(err){
+          return next(err);
+        }
+        
+      res.render('users/menu/show', {user: user, rest:rest, menus:menus});
+      });
+    });
+  });
+});
+
+// 메뉴편집화면
+router.get('/:id/menus/edit', needAuth, function(req,res,next){
+  User.findById(req.user.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+
+    Menu.findById(req.params.id, function(err, menu){
+      res.render('users/menu/edit', {user: user, menu:menu});
+      
+    });
+  });
+});
 // POST
+// 메뉴추가화면
+router.post('/:id/menus', needAuth, function(req,res,next){
+  User.findById(req.user.id, function(err, user) {
+    if (err) {
+      return next(err);
+    }
+
+    Rest.findById(req.params.id, function(err, rest){
+      if (err) {
+         return next(err);
+      }
+
+      var newMenu = new Menu({
+        rest_id : req.params.id,
+        name: req.body.menu,
+        price : req.body.price
+      });
+
+      newMenu.save(function(err) {
+      if (err) {
+          req.flash('danger',err);
+          res.redirect('back');
+        } else {
+          req.flash('success', '새로운 메뉴가 등록되었습니다.');
+          res.redirect('back');
+        }
+      });
+    });
+  });
+});  
+
 // 호스트 등록
 router.post('/:id', function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
@@ -254,6 +352,36 @@ router.put('/:id', function(req, res, next) {
   });
 });
 
+// 메뉴 편집
+router.put('/menus/:id', function(req, res, next) {
+  var err = menu_validateForm(req.body);
+  if (err) {
+    req.flash('danger', err);
+    return res.redirect('back');
+  }
+
+  Menu.findById(req.params.id, function(err, menu) {
+    if (err) {
+      return next(err);
+    }
+    if (!menu) {
+      req.flash('danger', '존재하지 않는 메뉴입니다.');
+      return res.redirect('back');
+    }
+    Menu.update({
+      name : req.body.menu,
+      price : req.body.price
+    },function(err, results) {
+      if (err) {
+        return console.log(err);
+      }else{
+        req.flash('success', '메뉴가 변경되었습니다.');
+        res.redirect('back');
+      }
+    });      
+  });
+});
+
 // DELETE
 // 사용자 삭제
 router.delete('/:id', function(req, res, next) {
@@ -285,6 +413,17 @@ router.delete('/:id/rest', function(req, res) {
             return console.log(err);
         }
         req.flash('success', '식당을 삭제했습니다.');
+        res.redirect('back');
+    });
+});
+
+// menu 삭제
+router.delete('/:id/menu', function(req, res) {
+    Menu.findOneAndRemove({_id: req.params.id}, function(err) {
+        if (err) {
+            return console.log(err);
+        }
+        req.flash('success', '메뉴을 삭제했습니다.');
         res.redirect('back');
     });
 });

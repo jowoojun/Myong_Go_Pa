@@ -1,0 +1,17 @@
+extends ../../profile_layout
+
+block content
+  .container
+    h1.page-header 회원가입
+    form(action='/users/#{rest.id}/menus', method='POST')
+        .form-group
+            label(for='menu') 메뉴 이름
+            input.form-control(type='text', id='menu', name="menu", placeholder='Menu')
+        .form-group
+            label(for='price') 가격
+            input.form-control(type='number', id='price' name="price", placeholder='Price')
+        
+        button.btn.btn-default(type='submit') 등록  
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
+        hr 
+    

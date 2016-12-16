@@ -47,7 +47,7 @@ app.use(session({
   secure: true,
   resave: true,
   saveUninitialized: true,
-  secret: 'long-long-long-long-secret-string-sadfjkb14346235lknvs8',
+  secret: 'asflknwlaern@lnfliunsdf*$^!@*#&$&!%@#kjbfdsliubfsdf',
   
 }));
 

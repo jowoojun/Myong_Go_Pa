@@ -2,14 +2,16 @@ var express = require('express'),
     User = require('../models/User');
     Rest = require('../models/Rest');
     Cafe = require('../models/Cafe');
-var router = express.Router();
-var _ = require('lodash');
+
 var findOrCreate = require('mongoose-findorcreate');
 var pbkdf2Password = require('pbkdf2-password');
-var hasher = pbkdf2Password();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var _ = require('lodash');
+
+var router = express.Router();
+var hasher = pbkdf2Password();
 
 router.use(passport.initialize());
 router.use(passport.session());

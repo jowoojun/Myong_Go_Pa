@@ -1,0 +1,35 @@
+include ../../profile_layout
+.container
+      h1.page-header=rest.title
+      
+      table.table.table-striped.table-bordered
+        thead
+          tr
+            th 요리 이름
+            th 가격
+            th 
+        tbody
+          each menu in menus
+            tr
+              td= menu.name
+              td= menu.price
+              td 
+                a.btn.btn-xs.btn-default(href="/users/#{menu.id}/menus/edit") 편집
+
+                a.btn.btn-xs.btn-default(data-id=menu.id, class='delete') 삭제
+      a.btn.btn-primary(href='/users/#{rest.id}/menus') 메뉴 추가
+
+                              
+                
+
+    form#deleteForm(style='display:none', method="POST")
+            
+    script(type='text/javascript').
+      $(".delete").click(function(e) {
+        var id = $(e.currentTarget).data('id');
+        if (confirm('정말 삭제하시겠습니까?')) {
+          console.log("success");
+          $("#deleteForm").attr('action', "/users/" + id + "/menu?_method=DELETE").submit();          
+        }
+        return false;
+      });
