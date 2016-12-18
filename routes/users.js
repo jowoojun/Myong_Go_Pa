@@ -1,7 +1,6 @@
 var express = require('express'),
     User = require('../models/User');
     Rest = require('../models/Rest');
-    Cafe = require('../models/Cafe');
     Favorite = require('../models/Favorite');
     Menu = require('../models/Menu');
 var pbkdf2Password = require('pbkdf2-password');
@@ -109,21 +108,6 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
-// 프로필보기
-router.get('/:id/profile', function(req, res, next) {
-  User.findById(req.params.id, function(err, user) {
-    Post.find({user_id: req.params.id},function(err,posts){
-      Favorite.find({user_id: req.params.id}, function(err, favorites){
-        if (err) {
-          return next(err);
-        }
-
-        res.render('users/profile', {user: user, posts: posts, favorites: favorites});
-      });
-    });
-  });
-});
-
 // Favorite 화면
 router.get('/:id/favorite',needAuth,  function(req, res, next) {
   User.findById(req.params.id, function(err, user) {
@@ -220,6 +204,7 @@ router.get('/:id/menus/edit', needAuth, function(req,res,next){
     });
   });
 });
+
 // POST
 // 메뉴추가화면
 router.post('/:id/menus', needAuth, function(req,res,next){

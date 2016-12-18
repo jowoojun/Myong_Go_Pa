@@ -1,7 +1,6 @@
 var express = require('express'),
     User = require('../models/User');
     Rest = require('../models/Rest');
-    Cafe = require('../models/Cafe');
 
 var findOrCreate = require('mongoose-findorcreate');
 var pbkdf2Password = require('pbkdf2-password');
@@ -49,6 +48,76 @@ function validateForm(form, options) {
   return null;
 }
 
+function Pagination(count, limit, page){
+    // 경로를 저장할 변수
+    var  url;
+    // 마지막 페이지의 번호를 가지는 변수
+    var maxPage = Math.ceil(count / limit);
+    
+    // 모든 페이지들의 정보를 담은 변수
+    var pagination = {
+        // post들의 갯수를 pagination.numPost에 저장
+        numPosts : count,
+        // 각각의 페이지의 정보를 담은 변수
+        pages : [],
+        // 첫 페이지의 정보를 담은 변수
+        firstPage : {
+            cls : 'firstPage',
+            url : '/more?page=1'
+        },
+        // 이전 페이지의 정보를 담은 변수
+        prevPage : {
+            cls : 'prevPage',
+            url : url
+        },
+        // 다음 페이지의 정보를 담은 변수
+        nextPage : {
+            cls : 'nextPage',
+            url : url
+        },
+        // 마지막 페이지의 정보를 담은 변수
+        lastPage : {
+            cls : 'lastPage',
+            url : '/more?page='+maxPage
+        },
+    };
+
+    // 이전 페이지 객체의 내부 변수 설정
+    if(!(page)){
+        pagination.prevPage.url = '/more?page=1';
+    }else if((page) === 1){
+        pagination.prevPage.url = '/more?page=1';
+    }else{
+        pagination.prevPage.url = '/more?page='+(page - 1);
+    }
+
+    // 다음 페이지 객체의 내부 변수 설정
+    if(!(page)){
+        if(maxPage === 1){
+            pagination.nextPage.url = '/more?page=1';
+        }else{
+            pagination.nextPage.url = '/more?page=2';
+        }
+    }else if(parseInt(page) === parseInt(maxPage)){
+        pagination.nextPage.url = '/more?page='+maxPage;
+    }else{
+        pagination.nextPage.url = '/more?page='+(page + 1);
+    }
+
+    // 반복문을 실행하면서 각각의 페이지 객체의 내부 변수 설정
+    for(var i = 0; i < maxPage; i++){
+        var data = {
+            cls : 'page',
+            url : '/more?page='+(i+1),
+            text : i+1
+        };
+        pagination.pages[i] = data;
+    }
+
+    return pagination;
+}
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -92,11 +161,28 @@ router.post('/search', function(req, res, next) {
 });
 
 router.get('/more', function(req, res, next){
-    Rest.find({}, function(err, rests){
-      if(err){
-        return next(err);
-      }
-      res.render('rest/search', { rests: rests});
+    // 현재 페이지의 쿼리를 받아오는 변수
+    var page = Math.max(1, req.query.page);
+    // 한 페이지에 몇개의 post를 보여줄 것인가 정하는 변수
+    var limit = 6;
+    // 화면에 post를 limit갯수만큼 보여줄 때 건너뛸 post의 갯수를 갖는 변수
+    var skip = (page - 1) * limit;
+    // post들의 갯수를 반환해주는 메소드
+    Rest.count({}, function(err, count){
+        // err가 발생한 경우 err를 콘솔에 출력한다.
+        if(err){
+            return console.log(err);
+        }
+        var pagination = Pagination(count, limit, page);  
+
+        // /posts/index페이지에 보여줄 post의 갯수를 limit으로 하고 skip갯수만큼 건너 뛰면서 화면에 보여준다.
+        Rest.find().skip(skip).limit(limit).exec(function(err, rests) {
+          // post를 찾는 과정에서 에러가 발생하는 경우 err를 콘솔에 출력한다.
+          if (err) {
+              return console.log(err);
+          }
+          res.render('rest/more', {rests: rests, pagination:pagination});
+        });
     });
 });
 

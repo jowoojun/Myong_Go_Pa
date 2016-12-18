@@ -26,5 +26,25 @@ block content
                 i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
               li
                 a.card-link(href='/rests/#{rest.id}') 상세보기
-     
+                  
+
+
+    hr
+    // Pagination
+    .row.text-center
+      .col-lg-12
+        ul.pagination
+          li(class=pagination.firstPage.cls): a(href=pagination.firstPage.url)
+            span(aria-hidden="true") &laquo;
+          li(class=pagination.prevPage.cls): a(href=pagination.prevPage.url)
+            span(aria-hidden="true") &lt;
+          each page in pagination.pages
+            li(class=page.cls)
+              a(href=page.url): span= page.text
+          li(class=pagination.nextPage.cls): a(href=pagination.nextPage.url)
+            span(aria-hidden="true") &gt;
+          li(class=pagination.lastPage.cls): a(href=pagination.lastPage.url)
+            span(aria-hidden="true") &raquo;
+    // /.row
+    hr
   link(href='/stylesheets/search.css', rel='stylesheet')

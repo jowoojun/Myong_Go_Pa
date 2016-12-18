@@ -1,7 +1,6 @@
 var express = require('express'),
     User = require('../models/User');
     Rest = require('../models/Rest');
-    Cafe = require('../models/Cafe');
     Post = require('../models/Post');
     Favorite = require('../models/Favorite');
     

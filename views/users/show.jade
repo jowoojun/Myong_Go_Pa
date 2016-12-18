@@ -7,8 +7,6 @@ include ../profile_layout
         li 이메일: #{user.email}
 
     hr
-    a.btn.btn-default(href='/users/#{user._id}/profile') 프로필 보기
-    | 
     a.btn.btn-default(href='/users/#{user._id}/edit') 수정
     | 
     a.btn.btn-default(data-id=user.id, class='delete') 삭제
