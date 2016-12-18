@@ -36,9 +36,11 @@ block content
         .col-md-4.col-sm-12
           .panel.custom_panel
             if rest.filePath
-                img.img-responsive(src=rest.filePath alt="사진")
+              a(href="/rests/#{rest.id}")
+                img.responsive(src=rest.filePath alt="사진" style='height: 280px;width:100%')
             else
-                img.img-responsive(src='http://placehold.it/700x530' alt="사진")
+              a(href="/rests/#{rest.id}")
+                  img.responsive(src='http://placehold.it/700x530' alt="사진" style='height: 280px;width:100%')
             ul.list-inline(style='margin: 10px')
               li
                 h7 #{rest.title}
@@ -54,15 +56,12 @@ block content
             ul.list-inline
               li(style='margin: 10px')
                 a.card-link(href='/rests/#{rest.id}') 상세보기
-    .row(style='text-align: center')
-        a.btn.btn-primary.btn-lg(href='/more') 추천 식당 더보기
+    
+  .row(style='text-align: center;dispaly:block')
+      a.btn.btn-primary.btn-lg(href='/more') 추천 식당 더보기
 
-    link(href='/stylesheets/search-box.css', rel='stylesheet')
-    script(src='/javascripts/autocomplete.js')
-    script.
-      $('.carousel').carousel({
-          interval: 1000 //changes the speed
-      })
+  link(href='/stylesheets/search-box.css', rel='stylesheet')
+  script(src='/javascripts/autocomplete.js')
 
 
     

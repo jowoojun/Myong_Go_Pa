@@ -11,9 +11,10 @@ block content
         .col-md-4
           .panel.custom_panel
             if rest.filePath
-                img.img-responsive(src=rest.filePath alt="사진")
+              a(href="/rests/#{rest.id}")
+                img.responsive(src=rest.filePath alt="사진")
             else
-                img.img-responsive(src='http://placehold.it/700x530' alt="사진")
+                img.responsive(src='http://placehold.it/700x530' alt="사진")
             ul.list-inline(style='margin: 10px')
               li
                 h7 #{rest.title}
