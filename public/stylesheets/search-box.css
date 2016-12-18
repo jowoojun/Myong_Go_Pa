@@ -94,7 +94,6 @@
     display: block;
     width: 100%;
     padding: .5rem .75rem;
-    font-size: 1.25rem;
     line-height: 1.25;
     color: #777777;
     border-color: #fff;
@@ -105,12 +104,6 @@
     border:none;
     border-radius: .25rem;
 }
-
-    /*padding-top: 0;
-    padding-bottom: 0;
-    font-size: 15px;
-    letter-spacing: -0.5px;
-    white-space: nowrap*/
 
 .thumbnail-wrappper {
     width: 25%; 
@@ -167,4 +160,14 @@
 .col-max {
     /* custom max width */
     max-width:320px;
+}
+
+
+@media only screen and (min-device-width : 1024px) {
+    .serch-form {
+        font-size: 1.25rem;
+    }
+    #serch{
+        margin:0px 80px
+    }
 }

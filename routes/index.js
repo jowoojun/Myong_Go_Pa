@@ -122,9 +122,7 @@ function Pagination(count, limit, page){
 //평점 순으로 sort되며 포스트 숫자는 3개로 제한
 router.get('/', function(req, res, next){
   Rest.find({}).sort({'meta.point':-1}).limit(3).exec(function(err, rests){
-    res.render('index', {
-      rests:rests
-    });
+    res.render('index', {rests:rests});
   });
 });
 
@@ -234,7 +232,8 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // profile : 페이스북 상에서의 id가 담겨있다.
-    var phoneEmail = profile.displayName + "@mju.ac.kr";
+    var phoneEmail = profile.displayName + "@mju.com";
+    console.log(phoneEmail);
     User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim() || phoneEmail}, function(err, user) {
       if (err) { 
         return done(err); 

@@ -9,7 +9,7 @@ block content
         .intro-heading 음식점을 찾아보세요
         a.page-scroll.btn.btn-xl(href="#serch") 검색하기
 
-  section#serch(style='margin: 0 80px')
+  section#serch
     .container
       form(id='search-form', action='/search', method='POST')    
           ul.list-inline
@@ -28,12 +28,12 @@ block content
             
             
     
-    .row(style='margin: 30px')
+    .row.col-sm-12(style='margin: 30px')
       .col-lg-12.text-center
         h2.section-heading 추천 식당
-    .row
+    .row.col-sm-12
       each rest in rests
-        .col-md-4
+        .col-md-4.col-sm-12
           .panel.custom_panel
             if rest.filePath
                 img.img-responsive(src=rest.filePath alt="사진")
