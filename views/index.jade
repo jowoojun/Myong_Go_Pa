@@ -11,14 +11,22 @@ block content
 
   section#serch(style='margin: 0 80px')
     .container
-      form(id='search-form', action='/search', method='POST')     
-        ul.list-inline
-          li
-            h4.control-label.label-custom(for='search', style='text-align: left') 식당
-            input.serch-form.input-lg(name='search', id='search', type='text', placeholder='목적지, 위치, 주소')
-          li
-            button.btn.btn-primary.btn-lg(type='submit' form='search-form') 검색
-
+      form(id='search-form', action='/search', method='POST')    
+          ul.list-inline
+            li
+             .form.group 
+                h4.control-label.label-custom(for='search', style='text-align: left') 식당
+                input.serch-form(name='search', id='search', type='text', placeholder='목적지, 위치, 주소')
+            li  
+              .form.group
+                i.fa.fa-spin.fa-spinner
+                button.btn.btn-primary.btn-lg(type='submit' form='search-form') 검색
+          .form.group
+            ul.suggest-box
+            
+            
+            
+            
     
     .row(style='margin: 30px')
       .col-lg-12.text-center
@@ -46,30 +54,13 @@ block content
                 a.card-link(href='/rests/#{rest.id}') 상세보기
     .row(style='text-align: center')
         a.btn.btn-primary.btn-lg(href='/more') 추천 식당 더보기
-    //- .container
-    //-     each rest in rests    
-    //-         .row(style="margin-bottom:20px;")
-    //-             .col-md-7
-    //-                 if rest.filePath 
-    //-                     a(href='/rests/#{rest.id}')
-    //-                         img.img-responsive(src=rest.filePath alt="사진" style="width:700px; height:300px")
-    //-                 else
-    //-                     a(href='/rests/#{rest.id}')
-    //-                         img.img-responsive(src='http://placehold.it/700x300', alt='사진')
-    //-                 |             
-    //-             .col-md-5
-    //-                 h3=rest.title
-    //-                 |                 
-    //-                 h4=rest.category
-    //-                 |                 
-    //-                 p=rest.description
-    //-                 |                 
-    //-                 a.btn.btn-primary(href='/rests/#{rest.id}') 상세보기
-    //-                     span.glyphicon.glyphicon-chevron-right
+
     link(href='/stylesheets/search-box.css', rel='stylesheet')
+    script(src='/javascripts/autocomplete.js')
     script.
       $('.carousel').carousel({
           interval: 1000 //changes the speed
       })
 
 
+    

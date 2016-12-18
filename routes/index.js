@@ -16,7 +16,7 @@ var hasher = pbkdf2Password();
 router.use(passport.initialize());
 router.use(passport.session());
 
-var countries = ["폴주니어", "산골식당"];
+var countries = ["폴주니어", "산골식당", "스시집"];
 
 
 
