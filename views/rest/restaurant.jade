@@ -26,6 +26,8 @@ block content
                         i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
                     li
                         i.fa.fa-comment-o(aria-hidden='true')  #{rest.reply_count}
+                    li
+                        i.fa.fa-star.text-danger(aria-hidden='true')  #{rest.meta.point}
 
                 p.p-custom.text-mutedr=rest.address
 
@@ -67,18 +69,27 @@ block content
                                 
                 div.border-bottom-custom.line-hei-high
             .row.line-hei-high
-
+        //오른쪽 사이드 네비게이션
         .container.col-md-4.line-hei
             .row#show-side-menu
                 .container-fluid
                     button.btn.btn-primary.custom-button(type='button', data-toggle='collapse', data-target='#myPostScriptForm') 후기쓰기
                     #myPostScriptForm.collapse
+                        div.line-hei-high
                         form(id='postScriptform', action='/rests/post/#{rest.id}', method='POST', role='form')
+                            .form-group
+                                ul.list-inline
+                                    li
+                                        h4#stars.starrr.text-danger
+                                            span.badge.label-danger#count 0
+                            .form-group
+                                input#point.form-control(type='number', name='point', hidden)
                             .form-group
                                 textarea#content.form-control(name='content', rows='3', aria-describedby='contentHelp')
                                 small#contentHelp.form-text.text-muted 후기 댓글을 작성해주세요.
-                            .form-group
+                            .form-group(style='text-align:center')
                                 button.btn.btn-primary(id='contentbtn', type='submit', form='postScriptform') 입력
+                                div.border-bottom-custom.line-hei-high
                     .col-md-12.rapping-color
 
                         .col-md-12.line-hei
@@ -133,9 +144,9 @@ block content
     //script(type='text/javascript', src='/javascripts/page.js')
     link(href='/stylesheets/show.css', rel='stylesheet')
 
+
     script.
         $('#show-side-menu').affix({offset: {top: 250} });
-        
         //- $('#person-minus').click(function(){
         //-     if(document.getElementById("person").value > 0){
         //-         document.getElementById("person").value--;
@@ -145,3 +156,120 @@ block content
         //-     document.getElementById("person").value++;
         //- });
 
+        
+        //- 별점기능 로직
+        var __slice = [].slice;
+
+        (function($, window) {
+            var Starrr;
+
+            Starrr = (function() {
+                Starrr.prototype.defaults = {
+                    rating: void 0,
+                    numStars: 5,
+                    change: function(e, value) {}
+                };
+
+                function Starrr($el, options) {
+                    var i, _, _ref,
+                        _this = this;
+
+                    this.options = $.extend({}, this.defaults, options);
+                    this.$el = $el;
+                    _ref = this.defaults;
+                    for (i in _ref) {
+                        _ = _ref[i];
+                        if (this.$el.data(i) != null) {
+                            this.options[i] = this.$el.data(i);
+                        }
+                    }
+                    this.createStars();
+                    this.syncRating();
+                    this.$el.on('mouseover.starrr', 'i', function(e) {
+                        return _this.syncRating(_this.$el.find('i').index(e.currentTarget) + 1);
+                    });
+                    this.$el.on('mouseout.starrr', function() {
+                        return _this.syncRating();
+                    });
+                    this.$el.on('click.starrr', 'i', function(e) {
+                        return _this.setRating(_this.$el.find('i').index(e.currentTarget) + 1);
+                    });
+                    this.$el.on('starrr:change', this.options.change);
+                }
+
+                Starrr.prototype.createStars = function() {
+                    var _i, _ref, _results;
+
+                    _results = [];
+                    for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
+                        _results.push(this.$el.append("<i class='fa fa-star-o'></i>"));
+                    }
+                    return _results;
+                };
+
+                Starrr.prototype.setRating = function(rating) {
+                    if (this.options.rating === rating) {
+                        rating = void 0;
+                    }
+                    this.options.rating = rating;
+                    this.syncRating();
+                    return this.$el.trigger('starrr:change', rating);
+                };
+
+                Starrr.prototype.syncRating = function(rating) {
+                    var i, _i, _j, _ref;
+
+                    rating || (rating = this.options.rating);
+                    if (rating) {
+                        for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+                            this.$el.find('i').eq(i).removeClass('fa-star-o').addClass('fa-star');
+                        }
+                    }
+                    if (rating && rating < 5) {
+                        for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
+                            this.$el.find('i').eq(i).removeClass('fa-star').addClass('fa-star-o');
+                        }
+                    }
+                    if (!rating) {
+                        return this.$el.find('i').removeClass('fa-star').addClass('fa-star-o');
+                    }
+                };
+
+                return Starrr;
+
+            })();
+            return $.fn.extend({
+                starrr: function() {
+                    var args, option;
+
+                    option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+                    return this.each(function() {
+                        var data;
+
+                        data = $(this).data('star-rating');
+                        if (!data) {
+                            $(this).data('star-rating', (data = new Starrr($(this), option)));
+                        }
+                        if (typeof option === 'string') {
+                            return data[option].apply(data, args);
+                        }
+                    });
+                }
+            });
+        })(window.jQuery, window);
+
+        $(function() {
+                return $(".starrr").starrr();
+            });
+
+            $( document ).ready(function() {
+                
+            $('#stars').on('starrr:change', function(e, value){
+                $('#count').html(value);
+                document.getElementById("point").value = value;
+            });
+            
+            $('#stars-existing').on('starrr:change', function(e, value){
+                $('#count-existing').html(value);
+            });
+        });

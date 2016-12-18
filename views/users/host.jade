@@ -1,11 +1,11 @@
 include ../profile_layout
 .container
-    h1.page-header Host되기
+    h1.page-header 포스팅 권한 얻기
 
-    h3 Host가 되시겠습니까?
-    p 집 수리비를 모으고 꿈에 그리던 여행을 떠나는 등 호스팅 부수입으로 꿈을 이루세요.
+    h3 사업장을 등록할 수 있는 권한을 얻으시겠습니까?
+    p 확실한 정보를 입력하여 이용자들의 불편함이 없어야합니다!
 
     p
         form(action='/users/#{user._id}', method='POST')
             div.form-actions
-                button.btn.btn-primary(type='submit') 호스트등록하기
+                button.btn.btn-primary(type='submit') 권한 얻기

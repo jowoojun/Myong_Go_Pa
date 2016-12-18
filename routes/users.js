@@ -10,6 +10,7 @@ var hasher = pbkdf2Password();
 var multer = require('multer');
 var upload = multer({ dest: '/tmp' });
 
+//로그인이 필요한 기능 접근시
 function needAuth(req, res, next) {
     if (req.user) {
       next();
@@ -18,7 +19,7 @@ function needAuth(req, res, next) {
       res.redirect('back');
     }
 }
-
+//input폼 타당성 체크
 function edit_validateForm(form, options) {
   var name = form.name || "";
   var email = form.email || "";
@@ -47,7 +48,7 @@ function edit_validateForm(form, options) {
 
   return null;
 }
-
+//메뉴 추가 page 타당성 체크
 function menu_validateForm(form, options) {
   var menu = form.menu || "";
   var price = form.price || "";

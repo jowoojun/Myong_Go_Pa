@@ -7,7 +7,7 @@
           span(aria-hidden='true') ×
         h4#myModalLabel.modal-title 회원가입
       .modal-body
-        form(id='mysignform', name='mysignform', action='/signup', method='POST')
+        form.signupValidate(id='mysignform', name='mysignform', action='/signup', method='POST')
             .form-group.has-feedback(id='name_group')
                 label.control-label(for='name') 이름
                 input.form-control(type='text', id='name', name='name', placeholder='Your name', onblur='validate_name()')
@@ -28,7 +28,7 @@
                 button.btn.btn-default.pull-left(type='button', data-dismiss='modal') 닫기
                 button.btn.btn-primary.pull-left(id='submit_button', form='mysignform', type='submit') 완료  
 
-script(src='/javascripts/signup.js')
+script(src='/javascripts/validator/signup.js')
 script(type='text/javascript', src='/bower_components/bootstrapvalidator/dist/js/bootstrapValidator.js')
 
 script(src='/agency/js/agency.js')

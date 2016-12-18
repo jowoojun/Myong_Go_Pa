@@ -49,6 +49,8 @@ block content
                 i.fa.fa-comment-o(aria-hidden='true')  #{rest.reply_count}
               li
                 i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
+              li
+                  i.fa.fa-star.text-danger(aria-hidden='true')  #{rest.meta.point}
             ul.list-inline
               li(style='margin: 10px')
                 a.card-link(href='/rests/#{rest.id}') 상세보기

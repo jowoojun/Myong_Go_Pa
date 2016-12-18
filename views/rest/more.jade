@@ -25,6 +25,9 @@ block content
               li
                 i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
               li
+                i.fa.fa-star.text-danger(aria-hidden='true')  #{rest.meta.point}
+            ul.list-inline(style='margin: 10px')
+              li
                 a.card-link(href='/rests/#{rest.id}') 상세보기
                   
 
@@ -47,4 +50,4 @@ block content
             span(aria-hidden="true") &raquo;
     // /.row
     hr
-  link(href='/stylesheets/search.css', rel='stylesheet')
+  link(href='/stylesheets/more.css', rel='stylesheet')

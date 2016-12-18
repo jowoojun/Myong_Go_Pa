@@ -139,8 +139,7 @@ router.get('/:id', function(req,res,next){
 });
 
 
-// Post
-// 후기남기기
+// 후기남기기 + 평점 계산 로직
 router.post('/post/:id',needAuth,function(req,res) {
   Rest.update({_id:req.params.id}, {$inc: {"reply_count" : 1}}, function(err, result){
     if(!req.user.id){
@@ -148,7 +147,21 @@ router.post('/post/:id',needAuth,function(req,res) {
         res.redirect('back');
     } else {
         User.findById(req.user.id, function(err,user){
-            Rest.findById(req.params.id, function(err, Rest){ 
+            Rest.findById(req.params.id, function(err, Rest){
+                //이용자 별점을 integer로 형변환 
+                //console.log('현재 포인트' + Rest.meta.point);
+                if(Rest.meta.point === 0){
+                    Rest.meta.point = parseInt(req.body.point);
+                    //console.log('0포인트일때 첫 평점 매긴다면? ' + Rest.meta.point);
+                } else {
+                    Rest.meta.point = (Rest.meta.point + parseInt(req.body.point))/2;
+                    //console.log('로직 후 포인트 평점' + Rest.meta.point);
+                }
+                Rest.save(function(err){
+                    if(err){
+                        return res.send(err);
+                    }
+                });
                 var newPost = new Post({
                     rest_id: req.params.id,
                     hostname: Rest.owner_name,
@@ -159,11 +172,11 @@ router.post('/post/:id',needAuth,function(req,res) {
                 
                 newPost.save(function(err){
                     if (err) {
-                    res.send(err);
+                        res.send(err);
                     } else {
-                    req.flash('success', '후기를 남겨주셔서 감사합니다.');
-                    res.redirect('back');
-                }
+                        req.flash('success', '후기를 남겨주셔서 감사합니다.');
+                        res.redirect('back');
+                    }
                 });
             });
         });
@@ -180,12 +193,12 @@ router.get('/:id/Favorite',needAuth,function(req,res) {
   } else {
     Rest.findById(req.params.id, function(err, Rest){
         if(err){
-            return next(err);
+            return res.send(err);
         } else {
             Rest.meta.favs++;
             Rest.save(function(err){
                 if(err){
-                    return next(err);
+                    return res.send(err);
                 }
             });
             

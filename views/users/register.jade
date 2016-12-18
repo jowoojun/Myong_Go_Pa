@@ -1,7 +1,7 @@
 include ../profile_layout
 .container
     h1.page-header 식당 등록하기
-    form(action='/users/#{user._id}/register', method='POST' enctype="multipart/form-data")
+    form.registervalidate(action='/users/#{user._id}/register', method='POST' enctype="multipart/form-data")
       .form-group
         label(for='title') 식당 이름
         input#title.form-control(name='title', type='text', aria-describedby='titleHelp', placeholder='title')

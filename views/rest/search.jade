@@ -5,7 +5,7 @@ block content
   .container-fluid
     .row(style='margin: 30px')
       .col-lg-12
-        h2.section-heading 추천 식당
+        h2.section-heading 검색 결과
     .row
       each rest in rests
         .col-md-4
@@ -24,6 +24,9 @@ block content
                 i.fa.fa-comment-o(aria-hidden='true')  #{rest.reply_count}
               li
                 i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
+              li
+                i.fa.fa-star.text-danger(aria-hidden='true')  #{rest.meta.point}
+            ul.list-inline(style='margin: 10px')
               li
                 a.card-link(href='/rests/#{rest.id}') 상세보기
      

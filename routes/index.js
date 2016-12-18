@@ -119,10 +119,12 @@ function Pagination(count, limit, page){
 
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  Rest.find({}, function(err, rests){
-    res.render('index',{rests:rests});
+//평점 순으로 sort되며 포스트 숫자는 3개로 제한
+router.get('/', function(req, res, next){
+  Rest.find({}).sort({'meta.point':-1}).limit(3).exec(function(err, rests){
+    res.render('index', {
+      rests:rests
+    });
   });
 });
 
@@ -142,16 +144,17 @@ router.get('/suggest', function(req, res, next) {
   res.json(ret);
 });
 
+//검색 기능 평점 높은 순으로 우선 검색
 router.post('/search', function(req, res, next) {
     if(req.body.search){
-      Rest.find({title: req.body.search}, function(err, rests){
+      Rest.find({title: req.body.search}).sort({'meta.point':-1}).limit(3).exec(function(err, rests){
         if(err){
           return next(err);
         }
         res.render('rest/search', {rests:rests});
       });
     } else {
-      Rest.find({}, function(err, rests){
+      Rest.find({}).sort({'meta.point':-1}).limit(3).exec(function(err, rests){
         if(err){
           return next(err);
         }
@@ -160,6 +163,7 @@ router.post('/search', function(req, res, next) {
     }
 });
 
+//평점 높은 순으로 우선 검색된다.
 router.get('/more', function(req, res, next){
     // 현재 페이지의 쿼리를 받아오는 변수
     var page = Math.max(1, req.query.page);
@@ -174,10 +178,8 @@ router.get('/more', function(req, res, next){
             return console.log(err);
         }
         var pagination = Pagination(count, limit, page);  
-
         // /posts/index페이지에 보여줄 post의 갯수를 limit으로 하고 skip갯수만큼 건너 뛰면서 화면에 보여준다.
-        Rest.find().skip(skip).limit(limit).exec(function(err, rests) {
-          // post를 찾는 과정에서 에러가 발생하는 경우 err를 콘솔에 출력한다.
+        Rest.find().sort({'meta.point':-1}).skip(skip).limit(limit).exec(function(err, rests) {
           if (err) {
               return console.log(err);
           }
@@ -232,7 +234,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // profile : 페이스북 상에서의 id가 담겨있다.
-    var phoneEmail = profile.displayName + "@mju.ac.kr"
+    var phoneEmail = profile.displayName + "@mju.ac.kr";
     User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim() || phoneEmail}, function(err, user) {
       if (err) { 
         return done(err); 
@@ -306,7 +308,7 @@ router.post('/signup', function(req, res, next) {
             return next(err);
           } else {
             req.flash('success', '가입이 완료되었습니다. 로그인 해주세요.');
-            res.redirect('/');
+            res.redirect('back');
           }
         });
     });

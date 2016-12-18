@@ -17,6 +17,9 @@ html(lang='ko')
     script(type='text/javascript', src='/bower_components/lodash/dist/lodash.min.js')
     script(src='/bower_components/toastr/toastr.min.js')
 
+    script(type='text/javascript', src='/bower_components/bootstrapvalidator/dist/js/bootstrapValidator.js')
+    link(rel='stylesheet', href='/bower_components/bootstrapvalidator/dist/css/bootstrapValidator.min.css')
+
     script(src='/agency/js/agency.js')
     link(href='/agency/css/agency.css', rel='stylesheet')     
 
@@ -29,7 +32,7 @@ html(lang='ko')
       include ./includes/signup_modal
     block content
 
-
+    //알람 띄우는 로직
     if flashMessages
       each texts, type in flashMessages
         if type === 'success'
