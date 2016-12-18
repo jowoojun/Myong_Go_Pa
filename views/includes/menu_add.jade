@@ -1,0 +1,16 @@
+#image_Modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel3')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#myModalLabel3.modal-title 이미지 확대
+      .modal-body
+        .col-xs-6.col-md-3
+            img(src=rest.filePath, alt="사진")
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 닫기
+
+
+script(src='/agency/js/agency.js')
+link(href='/agency/css/agency.css', rel='stylesheet')

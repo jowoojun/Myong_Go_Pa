@@ -74,8 +74,29 @@ router.get('/suggest', function(req, res, next) {
 });
 
 router.post('/search', function(req, res, next) {
-    Rest.find({title: req.body.search}, function(err, rests){
-      res.render('rest/search', {rests:rests});
+    if(req.body.search){
+      Rest.find({title: req.body.search}, function(err, rests){
+        if(err){
+          return next(err);
+        }
+        res.render('rest/search', {rests:rests});
+      });
+    } else {
+      Rest.find({}, function(err, rests){
+        if(err){
+          return next(err);
+        }
+        res.render('rest/search', {rests:rests});
+      });
+    }
+});
+
+router.get('/more', function(req, res, next){
+    Rest.find({}, function(err, rests){
+      if(err){
+        return next(err);
+      }
+      res.render('rest/search', { rests: rests});
     });
 });
 
@@ -125,7 +146,7 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // profile : 페이스북 상에서의 id가 담겨있다.
-    User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim()}, function(err, user) {
+    User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim() | null}, function(err, user) {
       if (err) { 
         return done(err); 
       }
@@ -137,9 +158,9 @@ passport.use(new FacebookStrategy({
 
 // passport local 첫번째로 실행 1
 router.post('/signin', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: 'back',
     failureRedirect: 'back',
-    failureFlash: true
+    // failureFlash: true
 }));
 
 // passport facebook 첫번째로 실행 1
@@ -151,7 +172,7 @@ router.get('/signin/facebook',
 router.get('/signin/facebook/callback',
   passport.authenticate('facebook', { 
     successRedirect: '/',
-    failureRedirect: '/signin'  
+    failureRedirect: 'back'  
   }));
 
 // 로그아웃

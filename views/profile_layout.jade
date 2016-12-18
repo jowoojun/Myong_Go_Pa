@@ -1,6 +1,7 @@
 extends layout
 
-block content 
+block content
+  .profile-page
   .container
         ul.class.nav.nav-tabs.nav-justified
             if user.ifHost
@@ -26,3 +27,6 @@ block content
                     a(href='/users/#{user._id}/favorite') Favorite
                 li 
                     a(href='/users/#{user._id}/host') Host되기
+    block content2
+
+    link(href='/stylesheets/profile.css', rel='stylesheet')

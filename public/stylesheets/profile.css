@@ -1,0 +1,117 @@
+.profile-page {
+
+    background-image: url('/images/101.jpg');
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+
+    height: 200px;
+    color: #fff;
+}
+
+.myPanel {
+    border-radius : 0px;
+}
+.aInPanel {
+    color: black;
+}
+.aInPanel:hover,
+.aInPanel:focus {
+    background-color: #fff;
+}
+
+.left-nav > li.active > a {
+    background-color: #fff;
+    font-weight:bold;
+}
+.left-nav > li.active > a:hover,
+.left-nav > li.active > a:focus {
+    background-color: #fff;
+}
+
+
+
+.midTopNav > li.active > a {
+    background-color: #fed136;
+    font-weight:bold;
+}
+
+.midTopNav > li.active > a:hover,
+.midTopNav > li.active > a:focus {
+    background-color: #fec503;
+}
+
+.panel-yellow {
+    background-color: #fff;
+}
+
+.space-txt {
+    padding-right: 30px;
+}
+
+.icon-big {
+    font-size: 80px;
+}
+
+.border-bottom-custom {
+    border-bottom: 1px solid #DCDCDC;
+    /*background-color: lightgrey;*/
+}
+
+
+.backg {
+    background-color: #fff;
+}
+.txt-margin {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.right-txt {
+    text-align: right;
+}
+.center-txt {
+
+    text-align: center;
+}
+.left-txt {
+    text-align: left;
+}
+.font-size-custom {
+     font-size: 30px;
+}
+
+.font-size-custom2 {
+     font-size: 20px;
+}
+.p-custom {
+    font-size: 15px;
+}
+
+.p-custom-sm {
+    font-size: 12px;
+
+}
+
+
+.custom-button {
+    width: 100%;
+}
+
+
+
+#show-side-menu {
+    top: 70px;
+    width: 300px;
+}
+
+.line-hei {
+    padding-top: 10px;
+}
+.line-hei-high {
+    padding-top: 20px;
+}

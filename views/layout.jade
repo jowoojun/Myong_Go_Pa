@@ -8,23 +8,35 @@ html(lang='ko')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap-theme.css')
     link(rel='stylesheet', href='/bower_components/bootstrap/dist/css/bootstrap.css')
     link(rel='stylesheet', href='/bower_components/font-awesome/css/font-awesome.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    //link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/half-slider.css')
+    link(rel='stylesheet', href='/bower_components/toastr/toastr.min.css')
     script(type="text/javascript", src="//apis.daum.net/maps/maps3.js?apikey=9e7ae8dffca3092cc74da6a36333f7fe&libraries=services")
     script(type='text/javascript', src='/bower_components/jquery/dist/jquery.js')
     script(type='text/javascript', src='/bower_components/bootstrap/dist/js/bootstrap.js')
-    script(type='text/javascript', src='/bower_components/lodash/lodash.min.js')
-    
+    script(type='text/javascript', src='/bower_components/lodash/dist/lodash.min.js')
+    script(src='/bower_components/toastr/toastr.min.js')
+
+    script(src='/agency/js/agency.js')
+    link(href='/agency/css/agency.css', rel='stylesheet')     
+
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css', integrity='sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi', crossorigin='anonymous')
+
   body
     block top-nav
       include ./includes/topnav
-    block flash
-    if flashMessages
-      each texts, type in flashMessages
-        .container
-          .alert(class='alert-#{type}')
-            each msg in texts
-              p= msg           
+      include ./includes/signin_modal
+      include ./includes/signup_modal
     block content
 
-    
+
+    if flashMessages
+      each texts, type in flashMessages
+        if type === 'success'
+          each msg in texts
+            script.
+              toastr.success("#{msg}");
+        if type === 'danger'
+          each msg in texts
+            script.
+              toastr.error("#{msg}"); 

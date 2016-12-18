@@ -1,0 +1,105 @@
+.show-page {
+
+    background-image: url('/images/m106.jpg');
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+
+    height: 300px;
+    color: #fff;
+}
+.panel-yellow {
+    background-color: #fff;
+}
+
+.space-txt {
+    padding-right: 30px;
+}
+
+.icon-big {
+    font-size: 80px;
+}
+
+.border-bottom-custom {
+    border-bottom: 1px solid #DCDCDC;
+    /*background-color: lightgrey;*/
+}
+
+
+.backg {
+    background-color: #fff;
+}
+
+.right-txt {
+    text-align: right;
+}
+.center-txt {
+
+    text-align: center;
+}
+.font-size-custom {
+     font-size: 30px;
+}
+
+.font-size-custom2 {
+     font-size: 20px;
+}
+.p-custom {
+    font-size: 15px;
+}
+
+.p-custom-sm {
+    font-size: 12px;
+
+}
+
+
+.custom-button {
+    width: 100%;
+}
+
+
+
+#show-side-menu {
+    top: 70px;
+    width: 300px;
+}
+
+.line-hei {
+    padding-top: 10px;
+}
+.line-hei-high {
+    padding-top: 20px;
+}
+
+
+@media (min-width: 900px) {
+    .affix {
+        position: fixed;
+        /*width: auto;*/
+    }
+    .space-txt {
+        padding-right: 60px;
+    }
+
+}
+
+
+
+@media (max-width: 900px) {
+    .affix {
+        position: static;
+        /*width: auto;*/
+        /*display: none;*/
+    }
+    #show-side-menu {
+        top: 70px;
+        width: auto;
+    }
+
+
+}

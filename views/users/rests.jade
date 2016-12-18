@@ -1,4 +1,5 @@
 include ../profile_layout
+
 .container
       h1.page-header 내가 등록한 식당
       
@@ -19,11 +20,40 @@ include ../profile_layout
               td= rest.category
               td= rest.description
               td 
-                a.btn.btn-xs.btn-default(href='/users/#{rest._id}/menus') 메뉴추가
-                
-                a.btn.btn-xs.btn-default(href='/users/#{rest._id}/menus/show') 메뉴확인
+                a.btn.btn-primary(style='margin: 5px', href='#', data-toggle='modal', data-target='#menu_add_Modal') 메뉴추가
+                #menu_add_Modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+                  .modal-dialog(role='document')
+                    .modal-content
+                      .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                          span(aria-hidden='true') ×
+                        h4#myModalLabel.modal-title 메뉴 추가
+                      .modal-body
+                        form(id='menu_add_form', action='/users/#{rest._id}/menus', method='POST')
+                          .form-group
+                            label.col-sm-2.control-label(for='inputEmail') 메뉴이름
+                            .col-sm-10
+                            input(
+                              type='text', id='menu', name='menu', class='form-control', 
+                              placeholder='메뉴 이름', required, autofocus
+                            )
+                          .form-group
+                            label.col-sm-2.control-label(for='inputPassword') 가격
+                            .col-sm-10
+                            input(
+                              type='number', id='price', name='price', class='form-control', 
+                              placeholder='가격', required, autofocus
+                            )
+                      .modal-footer
+                        button.btn.btn-default(type='button', data-dismiss='modal') 닫기
+                        button.btn.btn-primary(type='submit' form='menu_add_form') 메뉴 추가
 
-                a.btn.btn-xs.btn-default(data-id=rest.id, class='delete') 삭제
+
+
+                
+                a.btn.btn-primary(style='margin: 5px',href='/users/#{rest._id}/menus/show') 메뉴확인
+
+                a.btn.btn-primary(style='margin: 5px', data-id=rest.id, class='delete') 삭제
               
 
                               
@@ -40,3 +70,6 @@ include ../profile_layout
         }
         return false;
       });
+
+script(src='/agency/js/agency.js')
+link(href='/agency/css/agency.css', rel='stylesheet')

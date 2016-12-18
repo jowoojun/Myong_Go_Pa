@@ -12,7 +12,7 @@ function needAuth(req, res, next) {
       next();
     } else {
       req.flash('danger', '로그인이 필요합니다.');
-      res.redirect('/signin');
+      res.redirect('back');
     }
 }
 
@@ -121,9 +121,20 @@ router.get('/', function(req,res,next){
 // 식당 상세정보 페이지
 router.get('/:id', function(req,res,next){
   Rest.findById(req.params.id, function(err, rest) {
-    Post.find({rest_id : req.params.id}, function(err, posts){
-        res.render('rest/restaurant', {rest:rest, posts:posts});
-    });
+    if(err){
+        return next(err);
+    } else {
+        rest.meta.views++;
+        rest.save(function(err){
+            if(err){
+                return next(err);
+            }
+        });
+        Post.find({rest_id : req.params.id}, function(err, posts){
+            res.render('rest/restaurant', {rest:rest, posts:posts});
+        });
+    }
+
   });
 });
 
@@ -132,49 +143,71 @@ router.get('/:id', function(req,res,next){
 // 후기남기기
 router.post('/post/:id',needAuth,function(req,res) {
   Rest.update({_id:req.params.id}, {$inc: {"reply_count" : 1}}, function(err, result){
-    User.findById(req.user.id, function(err,user){
-      Rest.findById(req.params.id, function(err, Rest){ 
-          var newPost = new Post({
-              rest_id: req.params.id,
-              hostname: Rest.owner_name,
-              user_id: req.user.id,
-              user_name: user.name,
-              content: req.body.content
-          });  
-          
-          newPost.save(function(err){
-            if (err) {
-              res.send(err);
-            } else {
-              req.flash('success', '후기를 남겨주셔서 감사합니다.');
-              res.redirect('back');
-          }
+    if(!req.user.id){
+        req.flash('danger', '로그인을 해주세요.');
+        res.redirect('back');
+    } else {
+        User.findById(req.user.id, function(err,user){
+            Rest.findById(req.params.id, function(err, Rest){ 
+                var newPost = new Post({
+                    rest_id: req.params.id,
+                    hostname: Rest.owner_name,
+                    user_id: req.user.id,
+                    user_name: user.name,
+                    content: req.body.content
+                });  
+                
+                newPost.save(function(err){
+                    if (err) {
+                    res.send(err);
+                    } else {
+                    req.flash('success', '후기를 남겨주셔서 감사합니다.');
+                    res.redirect('back');
+                }
+                });
+            });
         });
-      });
-    });
+    }
+    
   });
 });
 
 // 즐겨찾기
-router.post('/:id/Favorite',needAuth,function(req,res) {
-  Rest.findById(req.params.id, function(err, Rest){ 
-    User.findById(req.user.id, function(err,user){
-      var newFavorite = new Favorite({
-          Rest_id: req.params.id,
-          user_id: req.user.id,
-          title : Rest.title,
-      });  
-
-      newFavorite.save(function(err){
-        if (err) {
-          res.send(err);
+router.get('/:id/Favorite',needAuth,function(req,res) {
+  if(!req.user.id){
+    req.flash('danger', '로그인을 해주세요.');
+    res.redirect('back');
+  } else {
+    Rest.findById(req.params.id, function(err, Rest){
+        if(err){
+            return next(err);
         } else {
-          req.flash('success', 'Favorite 목록에 추가되었습니다.');
-          res.redirect('back');
+            Rest.meta.favs++;
+            Rest.save(function(err){
+                if(err){
+                    return next(err);
+                }
+            });
+            
+            User.findById(req.user.id, function(err,user){
+                var newFavorite = new Favorite({
+                    Rest_id: req.params.id,
+                    user_id: req.user.id,
+                    title : Rest.title,
+                });  
+
+                newFavorite.save(function(err){
+                    if (err) {
+                    res.send(err);
+                    } else {
+                    req.flash('success', 'Favorite 목록에 추가되었습니다.');
+                    res.redirect('back');
+                    }
+                });
+            });
         }
-      });
     });
-  });
+  }
 });
 
 

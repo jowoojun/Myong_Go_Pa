@@ -16,7 +16,7 @@ function needAuth(req, res, next) {
       next();
     } else {
       req.flash('danger', '로그인이 필요합니다.');
-      res.redirect('/signin');
+      res.redirect('back');
     }
 }
 
@@ -287,7 +287,8 @@ router.post('/:id/register', upload.single("file"), function(req, res, next) {
       post_number:req.body.post_number,
       address: req.body.address,
       category: req.body.category,
-      filePath : req.body.url
+      filePath : req.body.url,
+      tellNumber : req.body.tellNumber
     }); 
 
     newRest.save(function(err) {

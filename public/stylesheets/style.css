@@ -229,11 +229,11 @@ div#messages div.fixed {
     margin-top:0em;
   }
 
-  .affix {
+  /*.affix {
     top: 100px;
     width: 25%;
 
-  }
+  }*/
 
   div#messages div.fixed a {
     position: fixed;

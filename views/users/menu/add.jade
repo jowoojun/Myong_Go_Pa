@@ -1,8 +1,8 @@
 extends ../../profile_layout
 
-block content
+block content2
   .container
-    h1.page-header 회원가입
+    h1.page-header 메뉴 추가
     form(action='/users/#{rest.id}/menus', method='POST')
         .form-group
             label(for='menu') 메뉴 이름
@@ -13,5 +13,7 @@ block content
         
         button.btn.btn-default(type='submit') 등록  
         a.btn.btn-default(href='javascript:window.history.back();') 뒤로 
-        hr 
-    
+
+
+
+link(href='/stylesheets/profile.css', rel='stylesheet')

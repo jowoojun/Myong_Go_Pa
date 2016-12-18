@@ -1,0 +1,97 @@
+.show-page {
+    background-image: url('/images/100.jpg');
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+
+    height: 80px;
+}
+
+.navbar-custom .nav li a {
+  /*color: #fed136;*/
+  outline: none;
+}
+
+.space-txt {
+    padding-right: 30px;
+}
+
+.icon-big {
+    font-size: 80px;
+}
+
+.border-bottom-custom {
+    border-bottom: 1px solid #DCDCDC;
+    /*background-color: lightgrey;*/
+}
+
+.backg {
+    background-color: #fff;
+}
+
+.right-txt {
+    text-align: right;
+}
+.center-txt {
+    text-align: center;
+}
+.p-custom {
+    font-size: 15px;
+}
+
+.p-custom-sm {
+    font-size: 12px;
+
+}
+
+
+.custom-button {
+    width: 100%;
+}
+
+.scroll-remove {
+    overflow: hidden;
+}
+
+#left-list-area {
+    overflow: auto;
+}
+
+
+
+.line-hei {
+    padding-top: 10px;
+}
+.line-hei-high {
+    padding-top: 20px;
+}
+
+
+@media (min-width: 900px) {
+    .scroll-remove {
+        overflow: hidden;
+    }
+
+    #left-list-area {
+        overflow: auto;
+        height: 530px;
+    }
+}
+
+
+
+@media (max-width: 900px) {
+    .scroll-remove {
+        overflow: auto;
+    }
+
+    #left-list-area {
+        overflow: auto;
+        height: 100%;
+    }
+}

@@ -1,124 +1,145 @@
 extends ../layout
 
 block content
+    .show-page
     .container
-        .col-lg-12
-          h1.page-header 
-        .thumbnail.panel-info
-            if rest.filePath 
-                img.img-responsive(src=rest.filePath alt="사진" style="width:700px; height:300px")
-            else
-                img.img-responsive(src='http://placehold.it/700x300', alt='사진')
+        //숙소 상세보기
+        .col-xs-12.col-md-8
+            .row.line-hei-high
+                if rest.filePath
+                    .col-xs-6.col-md-3
+                        a.thumbnail(href='#', data-toggle='modal', data-target='#image_Modal')
+                            img(src=rest.filePath, alt="사진")
+                        #image_Modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel3')
+                            .modal-dialog(role='document')
+                                .modal-body
+                                    .col-xs-6.col-md-3
+                                        img(src=rest.filePath, alt="사진")
+                                .modal-footer
+
+                h2= rest.title
+                
+                ul.list-inline
+                    li
+                        h4= rest.category
+                    li
+                        i.fa.fa-eye(aria-hidden='true')  #{rest.meta.views}
+                    li
+                        i.fa.fa-comment-o(aria-hidden='true')  #{rest.reply_count}
+
+                p.p-custom.text-mutedr=rest.address
+
+                div.border-bottom-custom.line-hei-high
+            //이모티콘 위치
+            .row.line-hei-high.center-txt
+                i.fa.fa-cutlery.icon-big.space-txt(aria-hidden='true')
+                i.fa.fa-car.icon-big.space-txt(aria-hidden='true')
+                i.fa.fa-users.icon-big.space-txt(aria-hidden='true')
+                i.fa.fa-wifi.icon-big(aria-hidden='true')
+                div.border-bottom-custom.line-hei-high
+            .row.line-hei-high
+                h4 메뉴
+                p.p-custom.line-hei 피자 치킨 콜라
+                div.border-bottom-custom.line-hei-high
+            .row.line-hei-high
+                h4 참고사항
+                p.p-custom.line-hei= rest.description
+                div.border-bottom-custom.line-hei-high
+            .row.line-hei-high
+
+                //이용자 후기
+                h4 이용자 후기
+            .row.line-hei-high
+                .container
+                    each post in posts
+                        .panel.panel-default.myPanel
+                            .panel-body
+                                ul.list-inline
+                                    li
+                                        h5 
+                                            i.fa.fa-user-circle(aria-hidden='true') #{post.user_name}
+                                    li.text-muted #{moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss')}
+                    
+                                ul.list-inline
+                                    li #{post.content}
                                 
-            .caption-full
-                h3=rest.title
-                h4=rest.category         
-                      
-            .ratings
-                p.pull-right=rest.reply_count+"개"     
-                p.pull-right 후기 개수        
-                p
-                    span.glyphicon.glyphicon-star
-                                                
-                    span.glyphicon.glyphicon-star
-                                                
-                    span.glyphicon.glyphicon-star
-                                                
-                    span.glyphicon.glyphicon-star
-                                                
-                    span.glyphicon.glyphicon-star-empty
-                    |별점 평균 
-           
-        .panel.panel-info
-            .panel-body
-                div
-                    h3 메뉴
-                        button#Mebtn.btn.btn-default(type='button', style='float:right;', value='true')
-                            span.glyphicon.glyphicon-menu-down(aria-hidden='true')
-                    
-                    #MENU.hidden
-                        ul.list-group
-                            //- each menu in menus
-                            //-     li.list-group-item.panel-info=menu.menu +" "+menu.price 
-            
-                    hr.panel-info
-                    
-                div
-                    h3 참고사항
-                        button#sidebtn.btn.btn-default(type='button', style='float:right', value='true')
-                            span.glyphicon.glyphicon-menu-down(aria-hidden='true')
+                div.border-bottom-custom.line-hei-high
+            .row.line-hei-high
 
-                    #note.hidden
-                        ul.list-group
-                            li.list-group-item.panel-info=rest.description
+        .container.col-md-4.line-hei
+            .row#show-side-menu
+                .container-fluid
+                    button.btn.btn-primary.custom-button(type='button', data-toggle='collapse', data-target='#myPostScriptForm') 후기쓰기
+                    #myPostScriptForm.collapse
+                        form(id='postScriptform', action='/rests/post/#{rest.id}', method='POST', role='form')
+                            .form-group
+                                textarea#content.form-control(name='content', rows='3', aria-describedby='contentHelp')
+                                small#contentHelp.form-text.text-muted 후기 댓글을 작성해주세요.
+                            .form-group
+                                button.btn.btn-primary(id='contentbtn', type='submit', form='postScriptform') 입력
+                    .col-md-12.rapping-color
+
+                        .col-md-12.line-hei
+                            .line-hei
+                                a.btn.btn-primary.custom-button(href='/rests/#{rest.id}/Favorite') Favorite
+                        .col-md-12.line-hei.center-txt
+                            p.p-custom-sm #{rest.meta.favs}
+                                span.text-muted 명의 이용자가 좋아합니다.
+
+                    .col-md-12.col-xs-12
+                        div#map(style="width:100%;height:300px;")
+                        script(type='text/javascript').
+                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                mapOption = {
+                                    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                    level: 3 // 지도의 확대 레벨
+                                };  
+
+                            // 지도를 생성합니다    
+                            var map = new daum.maps.Map(mapContainer, mapOption); 
+
+                            // 주소-좌표 변환 객체를 생성합니다
+                            var geocoder = new daum.maps.services.Geocoder();
+
+                            // 주소로 좌표를 검색합니다
+                            geocoder.addr2coord('#{rest.address}', function(status, result) {
+
+                                // 정상적으로 검색이 완료됐으면 
+                                if (status === daum.maps.services.Status.OK) {
+
+                                    var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
+
+                                    // 결과값으로 받은 위치를 마커로 표시합니다
+                                    var marker = new daum.maps.Marker({
+                                        map: map,
+                                        position: coords
+                                    });
+
+                                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                    var infowindow = new daum.maps.InfoWindow({
+                                        content: '<div style="width:150px;text-align:center;padding:6px 0;">#{rest.title}</div>'
+                                    });
+                                    infowindow.open(map, marker);
+
+                                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                    map.setCenter(coords);
+                                } 
+                            });
+
+
+
+    //script(type='text/javascript', src='/javascripts/page.js')
+    link(href='/stylesheets/show.css', rel='stylesheet')
+
+    script.
+        $('#show-side-menu').affix({offset: {top: 250} });
         
-        .panel.panel-info
-            .panel-body
-                .col-lg-6
-                    form(action='/rests/post/#{rest.id}', method='POST')
-                        span.input-group-btn(style="margin-right : 10px;padding-right:10px")
-                            textarea.form-control(name = "content" placeholder = '댓글 달기' style="margin-right: 30px;")
-                                                    
-                        span.input-group-btn
-                            button.btn.btn-default(type='submit') 입력    
-                .pull-right
-                    form(action='/rests/#{rest.id}/Favorite' method='POST')
-                        button.btn.btn-default.btn.btn-primary(type='submit') Favorite 목록에 추가
-        .well
-            each post in posts
-                .row
-                    .col-md-12
-                        span.glyphicon.glyphicon-star          
-                        span.glyphicon.glyphicon-star
-                        span.glyphicon.glyphicon-star
-                        span.glyphicon.glyphicon-star  
-                        span.glyphicon.glyphicon-star-empty=post.user_name
-                        |                             
-                        p=post.content
-        .col-md-12.col-xs-12
-            div#map(style="width:100%;height:350px;")
-            script(type='text/javascript').
-                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                    mapOption = {
-                        center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                        level: 3 // 지도의 확대 레벨
-                    };  
+        //- $('#person-minus').click(function(){
+        //-     if(document.getElementById("person").value > 0){
+        //-         document.getElementById("person").value--;
+        //-     }      
+        //- });
+        //- $('#person-plus').click(function(){
+        //-     document.getElementById("person").value++;
+        //- });
 
-                // 지도를 생성합니다    
-                var map = new daum.maps.Map(mapContainer, mapOption); 
-
-                // 주소-좌표 변환 객체를 생성합니다
-                var geocoder = new daum.maps.services.Geocoder();
-
-                // 주소로 좌표를 검색합니다
-                geocoder.addr2coord('#{rest.address}', function(status, result) {
-
-                    // 정상적으로 검색이 완료됐으면 
-                    if (status === daum.maps.services.Status.OK) {
-
-                        var coords = new daum.maps.LatLng(result.addr[0].lat, result.addr[0].lng);
-
-                        // 결과값으로 받은 위치를 마커로 표시합니다
-                        var marker = new daum.maps.Marker({
-                            map: map,
-                            position: coords
-                        });
-
-                        // 인포윈도우로 장소에 대한 설명을 표시합니다
-                        var infowindow = new daum.maps.InfoWindow({
-                            content: '<div style="width:150px;text-align:center;padding:6px 0;">#{rest.title}</div>'
-                        });
-                        infowindow.open(map, marker);
-
-                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                        map.setCenter(coords);
-                    } 
-                });
-        hr
-    .container
-        hr.panel-info
-        footer
-            .row
-                .col-lg-12
-                    p 명지대 팀프로젝트
-    script(type='text/javascript', src='/javascripts/page.js')

@@ -12,6 +12,12 @@ var schema = new Schema({
     address: {type: String, required: true},
     reply_count : {type:Number, default:0},
     filePath: {type: String, trim:true},
+    tellNumber: {type: String, trim:true},
+    meta: {
+        views : {type: Number, default: 0},
+        favs  : {type: Number, default: 0},
+        point : {type: Number, default: 0}
+    }
 });
 
 var Cafe = mongoose.model('Cafe', schema);

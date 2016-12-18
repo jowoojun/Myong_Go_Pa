@@ -1,37 +1,26 @@
-.navbar.navbar-default.navbar-fixed-top.navbar-inverse
-    .container
-        .navbar-header
-            button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-                span.sr-only Toggle navigation         
-                span.icon-bar         
-                span.icon-bar   
-                span.icon-bar               
-            a.navbar-brand(href='/') 명고파
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-            ul.nav.navbar-nav
+nav#mainNav.navbar.navbar-custom.navbar-fixed-top
+    // Brand and toggle get grouped for better mobile display
+    .navbar-header.page-scroll
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+        span.sr-only Toggle navigation
+        |  Menu 
+        i.fa.fa-bars
+      a.navbar-brand.page-scroll(href='/') MyongGoPa
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        ul.nav.navbar-nav.navbar-right
+            li.hidden
+            a(href='#page-top')
+
+        ul.nav.navbar-nav.navbar-right
+            if (!currentUser) 
                 li
-                    a(href='/rests') 식당
-                |                     
+                    a.page-scroll(href='#', data-toggle='modal', data-target='#myLoginModal') Signin
+                li 
+                    a.page-scroll(href='#', data-toggle='modal', data-target='#mySignUpModal') Signup
+            else
                 li
-                    a(href='/cafes') 카페
-                |                     
+                    a.page-scroll(href='/users/#{currentUser._id}') Profile
                 li
-                    form.navbar-form.navbar-left(action='/search', method='POST')
-                        .form
-                            input.form-control(type='text',name='search' id='search', size=20, placeholder='Which city are you going?')
-                            i.fa.fa-spin.fa-spinner
-                            ul.suggest-box                           
-                            button.btn.btn-default(type='submit' style="margin-left: 1em") search
-            ul.nav.navbar-nav.navbar-right
-                if (!currentUser) 
-                    li
-                        a(href='/signin') Signin
-                    li 
-                        a(href='/signup') Signup
-                else
-                    li
-                        a(href='/users/#{currentUser._id}') Profile
-                    li
-                        a(href='/signout') Signout
+                    a.page-scroll(href='/signout') Signout
 
   script(src='/javascripts/autocomplete.js')

@@ -3,31 +3,39 @@ include ../profile_layout
     h1.page-header 식당 등록하기
     form(action='/users/#{user._id}/register', method='POST' enctype="multipart/form-data")
       .form-group
-        label(for='title') 음식점 이름
-        input.form-control(type='text', id='title', name='title', placeholder='title')
+        label(for='title') 식당 이름
+        input#title.form-control(name='title', type='text', aria-describedby='titleHelp', placeholder='title')
+        small#titleHelp.form-text.text-muted 식당 이름을 입력해주세요.
       .form-group
-        label(for='category') 분류
-        input.form-control(type='text', id='category', name='cafegory' placeholder = 'cafegory')
+        label(for='category') 분류(식당/카페)
+        input#category.form-control(name='category', type='text', aria-describedby='categoryHelp', placeholder='category')
+        small#categoryHelp.form-text.text-muted 분류 카테고리를 입력해주세요.
+      .form-group
+        label(for='tellNumber') 전화번호
+        input#tellNumber.form-control(name='tellNumber', type='text', aria-describedby='tellNumberHelp', placeholder='tellNumber')
+        small#tellNumberHelp.form-text.text-muted 전화번호를 입력해주세요.
       .form-group
         label(for='description') 참고사항
-        textarea.form-control(id='description', name='description' placeholder = 'description')
+        textarea#description.form-control(name='description', rows='3', aria-describedby='descriptionHelp')
+        small#descriptionHelp.form-text.text-muted 참고사항을 입력해주세요.
       .form-group
         label(for='file') 음식점 사진
-        input#file.form-control(type="file")
-        input#url.form-control(type="text", readonly="readonly", name="url", value="")
-      .form-group
-        label(for='address') 주소
-        p
-          .postForm(style="width:100%")
-            input.form-control#sample3_postcode(name='post_number' type='text', style="width:40%; float:left;", placeholder='우편번호')
-            input(type='button', style="height:30px;margin:0px 20px",onclick='sample3_execDaumPostcode()', value='우편번호 찾기')
-          br
-          div#wrap(style='display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative')
-            img#btnFoldWrap(src='//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png', style='cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1', onclick='foldDaumPostcode()', alt='접기 버튼')
-          input.form-control.d_form.large(id="sample3_address" name='address' type='text', placeholder='주소')
+        input#file.form-control-file(name='file', type='file', aria-describedby='fileHelp')
+        input#url.form-control(type="text", readonly="readonly", name="url", value="", style='display: none')
+        small#fileHelp.form-text.text-muted 숙소를 대표할 사진을 업로드 해주세요.
 
-          span(id="guide" style="color:#999")
-      
+      .form-group
+        label(for='post_number') 주소
+        ul.list-inline
+          li
+            input#post_number.form-control(name='post_number' type='text', placeholder='우편번호', aria-describedby='addressHelp')
+          li
+            input.btn.btn-primary(type='button',onclick='sample3_execDaumPostcode()', value='우편번호 찾기')
+        small#addressHelp.form-text.text-muted 우편번호 찾기 클릭 시 daum 주소 찾기가 실행됩니다.
+        #wrap(style='display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative')
+          img#btnFoldWrap(src='//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png', style='cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1', onclick='foldDaumPostcode()', alt='접기 버튼', aria-describedby='addressHelp2')
+        input#address.d_form.large.form-control(type='text', placeholder='주소', name='address')
+        small#addressHelp2.form-text.text-muted 우편번호 찾기 클릭 시 daum 주소 찾기가 실행됩니다.
       div.form-actions
         button.btn.btn-primary(type='submit') 등록하기
       
@@ -68,8 +76,8 @@ include ../profile_layout
                         }
 
                         // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                        document.getElementById('sample3_postcode').value = data.zonecode; //5자리 새우편번호 사용
-                        document.getElementById('sample3_address').value = fullAddr;
+                        document.getElementById('post_number').value = data.zonecode; //5자리 새우편번호 사용
+                        document.getElementById('address').value = fullAddr;
 
                         // iframe을 넣은 element를 안보이게 한다.
                         // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)

@@ -25,7 +25,8 @@
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pbkdf2-password": "^1.2.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "toastr": "^2.1.2"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

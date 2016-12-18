@@ -1,0 +1,33 @@
+// Modal
+#myLoginModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h4#myModalLabel.modal-title 로그인
+      a.btn.btn-lg.btn-block.btn-default(href="/signin/facebook") facebook으로 로그인
+      .modal-body
+        form(id='myloginform', action='/signin', method='POST')
+          .form-group
+            label.col-sm-2.control-label(for='inputEmail') 이메일
+            .col-sm-10
+            input(
+              type='email', id='email', name='email', class='form-control', 
+              placeholder='Email address', required, autofocus
+            )
+          .form-group
+            label.col-sm-2.control-label(for='inputPassword') 비밀번호
+            .col-sm-10
+            input(
+              type='password', id='password', name='password', class='form-control', 
+              placeholder='Password', required, autofocus
+            )
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 닫기
+        button.btn.btn-primary(type='submit' form='myloginform') 로그인
+        button.btn.btn-primary.pull-left(href='#', data-toggle='modal', data-target='#mySignUpModal') 회원가입
+
+
+script(src='/agency/js/agency.js')
+link(href='/agency/css/agency.css', rel='stylesheet')

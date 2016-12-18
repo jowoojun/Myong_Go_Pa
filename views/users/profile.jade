@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+  .profile-page
   .container
     h1="안녕하세요, "+user.name+"입니다!"
     h4="회원가입 : "+moment(user.createdAt).format('YYYY-MM')   
@@ -23,3 +24,5 @@ block content
                 a(href="/rooms/#{post.room_id}")=post.hostname+"님께"
         .col-md-8.col-xs-12.context
             h3=post.content
+
+  link(href='/stylesheets/profile.css', rel='stylesheet')
