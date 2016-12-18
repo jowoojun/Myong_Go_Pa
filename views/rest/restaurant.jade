@@ -39,7 +39,9 @@ block content
                 div.border-bottom-custom.line-hei-high
             .row.line-hei-high
                 h4 메뉴
-                p.p-custom.line-hei 피자 치킨 콜라
+                ul.list-group
+                each menu in menus
+                    li.list-group-item.panel-info=menu.menu +" "+menu.price 
                 div.border-bottom-custom.line-hei-high
             .row.line-hei-high
                 h4 참고사항

@@ -146,7 +146,8 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // profile : 페이스북 상에서의 id가 담겨있다.
-    User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim() | null}, function(err, user) {
+    var phoneEmail = profile.displayName + "@mju.ac.kr"
+    User.findOrCreate({facebook_id: profile.id, name : profile.displayName, email: profile.emails[0].value.trim() || phoneEmail}, function(err, user) {
       if (err) { 
         return done(err); 
       }

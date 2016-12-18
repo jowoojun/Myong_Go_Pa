@@ -4,7 +4,7 @@ var findOrCreate = require('mongoose-findorcreate');
 
 var schema = new Schema({
   name: {type: String, required: true, trim: true},
-  email: {type: String, unique: true, trim: true},
+  email: {type: String, required: true, index: true, unique: true, trim: true},
   password: {type: String},
   salt: {type:String},
   ifHost : {type:Boolean, default:false},

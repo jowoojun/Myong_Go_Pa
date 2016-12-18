@@ -130,11 +130,12 @@ router.get('/:id', function(req,res,next){
                 return next(err);
             }
         });
-        Post.find({rest_id : req.params.id}, function(err, posts){
-            res.render('rest/restaurant', {rest:rest, posts:posts});
+        Menu.find({rest_id : req.params.id}, function(err, menus){
+            Post.find({rest_id : req.params.id}, function(err, posts){
+                res.render('rest/restaurant', {rest:rest, posts:posts, menus:menus});
+            });
         });
     }
-
   });
 });
 
