@@ -1,3 +1,4 @@
+// input태그 타당성 체크
 $(document).ready(function() {
     $('.signupValidate').bootstrapValidator({
         message: 'This value is not valid',

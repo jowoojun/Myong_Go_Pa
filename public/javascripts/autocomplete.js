@@ -1,3 +1,4 @@
+// 검색어 완성
 $(function() {
   $('#search').keyup(function() {
     var query = $('#search').val() || "";
@@ -6,7 +7,7 @@ $(function() {
       return; // typing한 내용이 없으면 종료
     }
 
-    // spinner를 돌리자..
+    
     $('.form').addClass('loading');
 
     $.ajax({
@@ -14,7 +15,7 @@ $(function() {
       data: {search: query},
       success: function(data) {
         // Ajax의 결과를 잘 받았을 때
-        // 화면에 받은 결과를 가지고 list를 rendering하고..
+        // 화면에 받은 결과를 가지고 list를 rendering
         var els = _.map(data, function(name) {
           return '<li>' + name + '</li>';
         });
@@ -27,7 +28,7 @@ $(function() {
         });
       },
       complete: function() {
-        $('.form').removeClass('loading');  // spinner를 정지
+        $('.form').removeClass('loading');
       }
     });
   });

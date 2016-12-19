@@ -89,28 +89,21 @@ function Pagination(count, limit, page){
 // GET
 // 식당 목록 페이지
 router.get('/', function(req,res,next){
-    // 현재 페이지의 쿼리를 받아오는 변수
     var page = Math.max(1, req.query.page);
-    // 한 페이지에 몇개의 post를 보여줄 것인가 정하는 변수
     var limit = 5;
-    // 화면에 post를 limit갯수만큼 보여줄 때 건너뛸 post의 갯수를 갖는 변수
     var skip = (page - 1) * limit;
-    // post들의 갯수를 반환해주는 메소드
+    
     Rest.count({}, function(err, count){
-        // err가 발생한 경우 err를 콘솔에 출력한다.
         if(err){
             return console.log(err);
         }
         var pagination = Pagination(count, limit, page);
 
-        // /posts/index페이지에 보여줄 post의 갯수를 limit으로 하고 skip갯수만큼 건너 뛰면서 화면에 보여준다.
         Rest.find().skip(skip).limit(limit).exec(function(err, rests) {
-            // post를 찾는 과정에서 에러가 발생하는 경우 err를 콘솔에 출력한다.
             if (err) {
                 return console.log(err);
             }
             
-            // /posts/index에 posts와 pagination을 매개변수로 넘겨준다.
             res.render('rest/list', {rests:rests, pagination:pagination});
         });
     }); 

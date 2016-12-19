@@ -1,3 +1,4 @@
+// 메뉴 숨김 및 보임
 $(function(){
     $('#Mebtn').click(function() {
         if($("#Mebtn").val() == "true"){
