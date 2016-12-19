@@ -11,7 +11,8 @@ include ../profile_layout
         tbody
           each favorite in favorites
             tr
-              td=favorite.title
+              td
+                a(href="/rests/#{favorite.rest_id}")=favorite.title
               td
                 a.btn.btn-xs.btn-default(data-id=favorite.id, class='delete') 삭제
                 

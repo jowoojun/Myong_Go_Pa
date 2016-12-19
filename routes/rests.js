@@ -196,12 +196,13 @@ router.get('/:id/Favorite',needAuth,function(req,res) {
             });
             
             User.findById(req.user.id, function(err,user){
+                
                 var newFavorite = new Favorite({
-                    Rest_id: req.params.id,
+                    rest_id: req.params.id,
                     user_id: req.user.id,
                     title : Rest.title,
                 });  
-
+                console.log(newFavorite);
                 newFavorite.save(function(err){
                     if (err) {
                     res.send(err);
