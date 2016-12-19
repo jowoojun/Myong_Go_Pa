@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
 
 var schema = new Schema({
     rest_id : {type:String},
-    cafe_id : {type:String},
     user_id : {type:String, required:true},
     
     title : {type:String}

@@ -1,10 +1,10 @@
 include ../../profile_layout
 .container
     h1.page-header 메뉴 수정
-    form(action='/users/menus/#{menu.id}?_method=PUT', method='POST')
+    form(action='/users/menus/#{menu.id}?_method=PUT' method='POST')
         .form-group
             label(for='menu') 메뉴 이름
-            input.form-control(type='text', id='menu', name="menu", placeholder='Menu', value=menu.name)
+            input.form-control(type='text', id='name', name="name", placeholder='Menu', value=menu.name)
         .form-group
             label(for='price') 가격
             input.form-control(type='number', id='price' name="price", placeholder='Price' value=menu.price)

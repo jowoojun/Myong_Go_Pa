@@ -50,7 +50,7 @@ function edit_validateForm(form, options) {
 }
 //메뉴 추가 page 타당성 체크
 function menu_validateForm(form, options) {
-  var menu = form.menu || "";
+  var menu = form.name || "";
   var price = form.price || "";
   menu = menu.trim();
 
@@ -355,10 +355,10 @@ router.put('/menus/:id', function(req, res, next) {
       req.flash('danger', '존재하지 않는 메뉴입니다.');
       return res.redirect('back');
     }
-    Menu.update({
-      name : req.body.menu,
-      price : req.body.price
-    },function(err, results) {
+    Menu.update({_id: req.params.id}, {$set:{
+                name : req.body.name,
+                price: req.body.price
+              }},function(err, results) {
       if (err) {
         return console.log(err);
       }else{
